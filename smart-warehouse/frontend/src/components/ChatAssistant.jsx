@@ -28,7 +28,7 @@ const ChatAssistant = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/assistant/ask', {
+      const response = await axios.post('http://localhost:5001/api/assistant/ask', {
         question: userMessage
       });
       setMessages(prev => [...prev, { role: 'assistant', content: response.data.answer }]);

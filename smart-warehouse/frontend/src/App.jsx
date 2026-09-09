@@ -15,8 +15,8 @@ function App() {
   const fetchData = async () => {
     try {
       const [itemsRes, hazardsRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/items'),
-        axios.get('http://localhost:5000/api/hazards')
+        axios.get('http://localhost:5001/api/items'),
+        axios.get('http://localhost:5001/api/hazards')
       ]);
       setItems(itemsRes.data);
       setHazards(hazardsRes.data);
@@ -50,6 +50,20 @@ function App() {
           </div>
         </div>
       </header>
+
+      {/* Hero Image Banner */}
+      <div className="relative w-full h-64 bg-gray-900 overflow-hidden">
+        <img 
+          src="/src/assets/hero-ai.png" 
+          alt="Smart Warehouse" 
+          className="w-full h-full object-cover opacity-60"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+        <div className="absolute bottom-0 left-0 p-8 max-w-7xl mx-auto w-full">
+          <h2 className="text-3xl font-bold text-white mb-2 shadow-sm">Intelligent Inventory Assistant</h2>
+          <p className="text-gray-200 text-lg max-w-2xl">Real-time tracking, AI-powered insights, and instant hazard reporting for 100+ Flex facilities globally.</p>
+        </div>
+      </div>
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

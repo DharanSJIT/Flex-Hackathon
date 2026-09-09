@@ -24,7 +24,7 @@ const HazardReport = ({ onHazardReported }) => {
         formData.append('photo', photo);
       }
 
-      await axios.post('http://localhost:5000/api/hazards', formData, {
+      await axios.post('http://localhost:5001/api/hazards', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       
