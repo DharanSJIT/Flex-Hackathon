@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, NavLink } from 'react-router-dom';
-import { LayoutDashboard, ShieldAlert, Package, Bot, Camera, Zap, TrendingUp } from 'lucide-react';
+import { LayoutDashboard, ShieldAlert, Package, Bot, Camera, Zap, TrendingUp, Network } from 'lucide-react';
 
 const Layout = ({ items, hazards, fetchData, loading }) => {
   const navLinkClass = ({ isActive }) =>
@@ -38,6 +38,10 @@ const Layout = ({ items, hazards, fetchData, loading }) => {
             <NavLink to="/forecast" className={navLinkClass}>
               <TrendingUp className="w-4 h-4" />
               <span className="hidden md:block">Demand AI</span>
+            </NavLink>
+            <NavLink to="/logistics" className={navLinkClass}>
+              <Network className="w-4 h-4" />
+              <span className="hidden md:block">Logistics Map</span>
             </NavLink>
             <NavLink to="/scanner" className={navLinkClass}>
               <Camera className="w-4 h-4" />

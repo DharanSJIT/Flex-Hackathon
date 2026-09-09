@@ -9,6 +9,7 @@ import Assistant from './pages/Assistant';
 import Scanner from './pages/Scanner';
 import SmartFlow from './pages/SmartFlow';
 import DemandForecast from './pages/DemandForecast';
+import LogisticsMap from './pages/LogisticsMap';
 
 function App() {
   const [items, setItems] = useState([]);
@@ -41,6 +42,7 @@ function App() {
         <Route path="inventory" element={<Inventory />} />
         <Route path="smartflow" element={<SmartFlow />} />
         <Route path="forecast" element={<DemandForecast />} />
+        <Route path="logistics" element={<LogisticsMap />} />
         <Route path="scanner" element={<Scanner />} />
         <Route path="safety" element={<Safety />} />
         <Route path="assistant" element={<Assistant />} />
