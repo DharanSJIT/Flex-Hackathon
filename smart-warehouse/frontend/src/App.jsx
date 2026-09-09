@@ -8,6 +8,7 @@ import Safety from './pages/Safety';
 import Assistant from './pages/Assistant';
 import Scanner from './pages/Scanner';
 import SmartFlow from './pages/SmartFlow';
+import DemandForecast from './pages/DemandForecast';
 
 function App() {
   const [items, setItems] = useState([]);
@@ -39,6 +40,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="inventory" element={<Inventory />} />
         <Route path="smartflow" element={<SmartFlow />} />
+        <Route path="forecast" element={<DemandForecast />} />
         <Route path="scanner" element={<Scanner />} />
         <Route path="safety" element={<Safety />} />
         <Route path="assistant" element={<Assistant />} />
