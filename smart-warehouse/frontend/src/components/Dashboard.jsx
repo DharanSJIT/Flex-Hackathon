@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { AlertTriangle, Package, FileText, X, Loader2, Search, Filter } from 'lucide-react';
 import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 const Dashboard = ({ items }) => {
   const [poModal, setPoModal] = useState({ isOpen: false, item: null, text: '', loading: false });
@@ -159,8 +161,8 @@ const Dashboard = ({ items }) => {
       {/* PO Modal */}
       {poModal.isOpen && (
         <div className="absolute inset-0 bg-black/50 z-20 flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col animate-in zoom-in-95">
-            <div className="p-5 bg-gradient-to-r from-flex-dark to-gray-800 text-white flex items-center justify-between">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[85vh] animate-in zoom-in-95">
+            <div className="p-5 bg-gradient-to-r from-flex-dark to-gray-800 text-white flex items-center justify-between shrink-0">
               <h3 className="font-bold flex items-center gap-2 text-lg">
                 <FileText className="w-5 h-5 text-flex-blue" /> 
                 AI Purchase Order Draft
@@ -169,16 +171,18 @@ const Dashboard = ({ items }) => {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="p-6 flex-1 min-h-[300px] overflow-y-auto bg-gray-50">
+            <div className="p-6 flex-1 overflow-y-auto bg-gray-50">
               {poModal.loading ? (
-                <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-4">
+                <div className="h-[300px] flex flex-col items-center justify-center text-gray-500 gap-4">
                   <Loader2 className="w-10 h-10 animate-spin text-flex-blue" />
                   <p className="font-medium">Gemini AI is drafting your optimal Purchase Order...</p>
                 </div>
               ) : (
-                <pre className="whitespace-pre-wrap text-sm text-gray-800 font-mono bg-white p-5 border border-gray-200 rounded-xl shadow-inner">
-                  {poModal.text}
-                </pre>
+                <div className="bg-white p-6 border border-gray-200 rounded-xl shadow-inner prose prose-sm prose-blue max-w-none">
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {poModal.text}
+                  </ReactMarkdown>
+                </div>
               )}
             </div>
             {!poModal.loading && (
