@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import { Send, Bot, User, Loader2 } from 'lucide-react';
+import { Send, Bot, User, Loader2, Mic } from 'lucide-react';
 
 const ChatAssistant = () => {
   const [messages, setMessages] = useState([
@@ -8,7 +8,43 @@ const ChatAssistant = () => {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isListening, setIsListening] = useState(false);
   const messagesEndRef = useRef(null);
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = SpeechRecognition ? new SpeechRecognition() : null;
+
+  if (recognition) {
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setInput(transcript);
+      setIsListening(false);
+    };
+
+    recognition.onerror = (event) => {
+      console.error('Speech recognition error', event.error);
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+  }
+
+  const toggleListen = () => {
+    if (!recognition) return alert("Speech recognition is not supported in your browser.");
+    
+    if (isListening) {
+      recognition.stop();
+    } else {
+      recognition.start();
+      setIsListening(true);
+    }
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -81,6 +117,13 @@ const ChatAssistant = () => {
 
       <div className="p-3 border-t border-gray-200 bg-white rounded-b-lg">
         <form onSubmit={handleSend} className="flex gap-2">
+          <button
+            type="button"
+            onClick={toggleListen}
+            className={`p-2 rounded border ${isListening ? 'bg-red-100 border-red-300 text-red-600' : 'bg-gray-100 border-gray-300 text-gray-600 hover:bg-gray-200'}`}
+          >
+            <Mic className="w-4 h-4" />
+          </button>
           <input
             type="text"
             value={input}

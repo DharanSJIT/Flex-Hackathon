@@ -66,6 +66,35 @@ router.post('/assistant/ask', async (req, res) => {
   }
 });
 
+// POST /api/po/generate
+router.post('/po/generate', async (req, res) => {
+  try {
+    const { item } = req.body;
+    const prompt = `
+      You are an automated procurement system for Flex Smart Warehouse.
+      Generate a professional, concise Purchase Order (PO) to send to a supplier to restock the following item:
+      SKU: ${item.sku}
+      Name: ${item.name}
+      Current Quantity: ${item.quantity}
+      Reorder Threshold: ${item.reorderThreshold}
+      Facility: ${item.facility}
+
+      The PO should request enough units to get well above the threshold (e.g., request 1000 units).
+      Format as a plain text email or document.
+    `;
+
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: prompt,
+    });
+
+    res.json({ poText: response.text });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to generate PO' });
+  }
+});
+
 // GET /api/hazards
 router.get('/hazards', async (req, res) => {
   try {
